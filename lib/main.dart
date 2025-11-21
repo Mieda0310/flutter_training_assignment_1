@@ -66,7 +66,7 @@ class MyHomePage extends StatelessWidget {
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Text(index.toString()),
+                      child: Text((index + 1).toString()),
                     );
                   }),
                 ),
