@@ -23,15 +23,17 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   // TODO アプリを起動して最初だけAppBarのタイトルを変更する
-  // final title = "課題1 ~UI編~";
-  final title = "HOME";
+  // String title = "課題1 ~UI編~";
+  final title;
+  MyHomePage({super.key, this.title});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(title),
+        // title ? title : "HOME"はboolの時にできる。??で値がなかったら右辺が入る
+        title: Text(title ?? "課題1 ~UI編~"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

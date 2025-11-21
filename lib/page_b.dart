@@ -50,10 +50,12 @@ class PageB extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()),
+                      MaterialPageRoute(
+                        builder: (context) => MyHomePage(title: "Home"),
+                      ),
                     );
                   },
-                  child: Text("HOMEへ"),
+                  child: Text("Homeへ"),
                 ),
                 Text("~~間~~"),
                 ElevatedButton(
