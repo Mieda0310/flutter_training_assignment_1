@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:training_assignment_1/color_model.dart';
 import 'package:training_assignment_1/page_a.dart';
 import 'package:training_assignment_1/page_b.dart';
 
@@ -22,8 +24,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  // TODO アプリを起動して最初だけAppBarのタイトルを変更する
-  // String title = "課題1 ~UI編~";
   final title;
   MyHomePage({super.key, this.title});
 
@@ -46,29 +46,53 @@ class MyHomePage extends StatelessWidget {
             ),
             // CenterでGridViewを囲むだけでは中央添えにならないので、Expandedをで余白を均等に取り、上下中央に押し込む
             Expanded(
-              child: Center(
-                child: GridView.count(
-                  primary: false,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  crossAxisCount: 3,
-                  padding: const EdgeInsets.all(8.0),
-                  // shrinkWrap、physicsはListViewでもあるもの
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  //  List.generate(9, (index) は for (int i = 0; i < 9; i++)と同じ
-                  children: List.generate(9, (index) {
-                    return Container(
-                      alignment: Alignment.center,
-                      // decorationがあると、Containerの中にcolorは定義できない。
-                      decoration: BoxDecoration(
-                        color: Colors.black12,
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text((index + 1).toString()),
-                    );
-                  }),
+              child: ChangeNotifierProvider<ColorModel>(
+                // TODO: ここから来週は実施する
+                create: (_) => ColorModel(),
+                child: Center(
+                  child: Consumer<ColorModel>(
+                    builder: (context, model, child) {
+                      return GridView.count(
+                        primary: false,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        crossAxisCount: 3,
+                        padding: const EdgeInsets.all(8.0),
+                        // shrinkWrap、physicsはListViewでもあるもの
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        //  List.generate(9, (index) は for (int i = 0; i < 9; i++)と同じ
+                        children: List.generate(9, (index) {
+                          // TODO 各ブロックを押下してボタンを押したような挙動にする
+                          return GestureDetector(
+                            onTap: () {
+                              // TODO 各ブロックをタップした際に色を変更する
+                              model.changeColor(
+                                index,
+                                Colors.black,
+                                Colors.white,
+                              );
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              // decorationがあると、Containerの中にcolorは定義できない。
+                              decoration: BoxDecoration(
+                                color: model.blocks[index].blockColor,
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                (index + 1).toString(),
+                                style: TextStyle(
+                                  color: model.blocks[index].textColor,
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -114,3 +138,5 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
+
+void colorChange() {}
