@@ -7,6 +7,7 @@ class Block {
   Color textColor;
   bool colorChanged;
 
+  // Block()と呼ぶとここも呼ばれる。pythonの__init__と同じ役割、インスタンス生成時に呼ばれる初期化処理
   Block({
     this.blockColor = Colors.black12,
     this.textColor = Colors.black,
@@ -29,7 +30,7 @@ class ColorModel extends ChangeNotifier {
 
     // 色を変更していたら初期値に戻す
     if (block.colorChanged) {
-      blocks[index] = Block();
+      blocks[index] = block.colorReset();
     } else {
       // 新しく色を変更する場合は引数で渡ってきた値を代入
       block.blockColor = newBlockColor;
